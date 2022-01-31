@@ -1,4 +1,3 @@
-import { AppError } from "../../../../shared/errors/AppError"
 import { InMemoryUsersRepository } from "../../repositories/in-memory/InMemoryUsersRepository"
 import { CreateUserError } from "./CreateUserError"
 import { CreateUserUseCase } from "./CreateUserUseCase"
@@ -15,7 +14,7 @@ describe("Create User", () => {
     
     it("should be able to add a new user", async () => {
 
-        const user = await createUserUseCase.execute({
+        const user = await inMemoryUsersRepository.create({
             name: "Daniel Morais",
             email: "daniel@bumlai.com.br",
             password: "123456"
@@ -29,13 +28,13 @@ describe("Create User", () => {
     it("should not be able to add a new user with same email", async () => {
 
         expect(async ()=> {
-             await createUserUseCase.execute({
+             await inMemoryUsersRepository.create({
                 name: "Daniel Morais",
                 email: "daniel@bumlai.com.br",
                 password: "123456"
             });
 
-            const user = await createUserUseCase.execute({
+            const user = await inMemoryUsersRepository.create({
                 name: "Daniel Morais",
                 email: "daniel@bumlai.com.br",
                 password: "123456"
